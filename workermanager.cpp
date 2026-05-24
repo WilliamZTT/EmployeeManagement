@@ -19,3 +19,9 @@ void WorkerManager::Show_Menu()
     cout << "7. Sort Employee Information" << endl;
     cout << "8. Clear All Employee Information" << endl;
 }
+void WorkerManager::ExitSystem()
+{
+    cout << "Thank you for using Employee Management System!" << endl;
+    system("pause");
+    exit(0);
+}
