@@ -1,6 +1,4 @@
-#include <iostream>
 #include "workermanager.h"
-using namespace std;
 int main()
 {
     WorkerManager wm;
@@ -16,6 +14,7 @@ int main()
                 wm.ExitSystem();
                 break;
             case 2:
+                wm.Add_Worker();
                 break;
             case 3:
                 break;
@@ -28,7 +27,6 @@ int main()
             case 7:
                 break;
             case 8:
-                cout << 111111111111111 << endl;
                 break;
         }
     }
