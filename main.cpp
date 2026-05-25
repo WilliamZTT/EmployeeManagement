@@ -17,6 +17,7 @@ int main()
                 wm.Add_Worker();
                 break;
             case 3:
+                wm.Display_Workers();
                 break;
             case 4:
                 break;

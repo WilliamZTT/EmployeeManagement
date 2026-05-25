@@ -1,10 +1,28 @@
 #include "workermanager.h"
 WorkerManager::WorkerManager()
 {
-    
+    if (IsFileEmpty())
+        return;
+    ifstream ifs(FILE, ios::in);
+    int id, deptId;
+    string name;
+    while (ifs >> id >> name >> deptId)
+    {
+        Worker* worker = nullptr;
+        switch (deptId)
+        {
+            case 1: worker = new Employee(id, name, deptId); break;
+            case 2: worker = new Manager(id, name, deptId); break;
+            case 3: worker = new Boss(id, name, deptId); break;
+        }
+        if (worker)
+            WorkerArray.push_back(worker);
+    }
+    ifs.close();
 }
 WorkerManager::~WorkerManager()
 {
+    SaveInfo();
     for (Worker* p : WorkerArray)
         delete p;
     WorkerArray.clear();
@@ -23,9 +41,21 @@ void WorkerManager::Show_Menu()
 }
 void WorkerManager::ExitSystem()
 {
+    SaveInfo();
     cout << "Thank you for using Employee Management System!" << endl;
     system("pause");
     exit(0);
+}
+
+bool WorkerManager::IsFileEmpty()
+{
+    ifstream ifs(FILE, ios::in);
+    if (!ifs.is_open())
+        return true;
+    ifs >> ws;
+    bool empty = ifs.eof();
+    ifs.close();
+    return empty;
 }
 void Employee::Show_Info()
 {
@@ -96,4 +126,24 @@ void WorkerManager::Add_Worker()
         WorkerArray.push_back(worker);
     }
 }
-        
+void WorkerManager::SaveInfo()
+{
+    ofstream ofs(FILE, ios::out);
+    for (Worker* worker : WorkerArray)
+    {
+        ofs << worker->id << " " << worker->name << " " << worker->deptId << endl;
+    }
+    ofs.close();
+}
+void WorkerManager::Display_Workers()
+{
+    if (WorkerArray.empty())
+    {
+        cout << "No worker information available!" << endl;
+        return;
+    }
+    for (Worker* worker : WorkerArray)
+    {
+        worker->Show_Info();
+    }
+}

@@ -5,9 +5,11 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#define FILE "WorkerInfo.txt"
 using namespace std;
 class Worker
 {
+    friend class WorkerManager;
 public:
     Worker() {}
     virtual ~Worker() {}
@@ -25,6 +27,8 @@ public:
     void Show_Menu();
     void ExitSystem();
     void Add_Worker();
+    void SaveInfo();
+    bool IsFileEmpty();
     void Display_Workers();
 protected:
     vector<Worker*> WorkerArray;
