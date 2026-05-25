@@ -20,14 +20,19 @@ int main()
                 wm.Display_Workers();
                 break;
             case 4:
+                wm.Delete_Worker();
                 break;
             case 5:
+                wm.Modify_Worker();
                 break;
             case 6:
+                wm.Find_Worker();
                 break;
             case 7:
+                wm.Sort_Worker();
                 break;
             case 8:
+                wm.Clear_Worker();
                 break;
         }
     }

@@ -147,3 +147,115 @@ void WorkerManager::Display_Workers()
         worker->Show_Info();
     }
 }
+void WorkerManager::Delete_Worker()
+{
+    if (WorkerArray.empty())
+    {
+        cout << "No worker information available!" << endl;
+        return;
+    }
+    cout << "Deleting worker's information" << endl;
+    cout << "Please enter the ID of the worker you want to delete: " << endl;
+    int id;
+    cin >> id;
+    auto it = find_if(WorkerArray.begin(), WorkerArray.end(), [id](Worker* worker) 
+    {
+        return worker->id == id;
+    });
+    if (it != WorkerArray.end())
+    {
+        delete *it;
+        WorkerArray.erase(it);
+        cout << "Worker with ID " << id << " has been deleted." << endl;
+    }
+    else
+    {
+        cout << "Worker with ID " << id << " not found!" << endl;
+    }
+    this->SaveInfo();
+}
+void WorkerManager::Modify_Worker()
+{
+    cout << "Modifying worker's information" << endl;
+    cout << "Please enter the ID of the worker you want to modify: " << endl;
+    int id;
+    cin >> id;
+    auto it = find_if(WorkerArray.begin(), WorkerArray.end(), [id](Worker* worker) {
+        return worker->id == id;
+    });
+    if (it != WorkerArray.end())
+    {
+        delete *it;
+        int newId;
+        string newName;
+        int newDeptId;
+        cout << "Please enter new ID: " << endl;
+        cin >> newId;
+        cout << "Please enter new name: " << endl;
+        cin >> newName;
+        cout << "Please enter new department ID: " << endl;
+        cin >> newDeptId;
+        Worker* newWorker = nullptr;
+        switch (newDeptId)
+        {
+            case 1:
+                newWorker = new Employee(newId, newName, newDeptId);
+                break;
+            case 2:
+                newWorker = new Manager(newId, newName, newDeptId);
+                break;
+            case 3:
+                newWorker = new Boss(newId, newName, newDeptId);
+                break;
+            default:
+                cout << "Invalid department ID!" << endl;
+                return;
+        }
+        *it = newWorker;
+        cout << "Worker with ID " << id << " has been modified." << endl;
+        this->SaveInfo();
+    }
+    else
+    {
+        cout << "Worker with ID " << id << " not found!" << endl;
+    }
+}
+void WorkerManager::Find_Worker()
+{
+    cout << "Finding worker's information" << endl;
+    cout << "Please enter the ID of the worker you want to find: " << endl;
+    int id;
+    cin >> id;
+    auto it = find_if(WorkerArray.begin(), WorkerArray.end(), [id](Worker* worker) {
+        return worker->id == id;
+    });
+    if (it != WorkerArray.end())
+    {
+        (*it)->Show_Info();
+    }
+    else
+    {
+        cout << "Worker with ID " << id << " not found!" << endl;
+    }
+}
+void WorkerManager::Sort_Worker()
+{
+    cout << "Sorting worker's information by ID" << endl;
+    sort(WorkerArray.begin(), WorkerArray.end(), [](Worker* a, Worker* b) {
+        return a->id < b->id;
+    });
+    cout << "Workers have been sorted by ID." << endl;
+    this->SaveInfo();
+}
+void WorkerManager::Clear_Worker()
+{
+    cout << "Clearing all worker information" << endl;
+    for (Worker* worker : WorkerArray)
+    {
+        delete worker;
+    }
+    WorkerArray.clear();
+    ofstream ofs(FILE, ios::out);
+    ofs.close();
+    cout << "All worker information has been cleared." << endl;
+}

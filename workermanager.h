@@ -30,6 +30,11 @@ public:
     void SaveInfo();
     bool IsFileEmpty();
     void Display_Workers();
+    void Delete_Worker();
+    void Modify_Worker();
+    void Find_Worker();
+    void Sort_Worker();
+    void Clear_Worker();
 protected:
     vector<Worker*> WorkerArray;
 };
