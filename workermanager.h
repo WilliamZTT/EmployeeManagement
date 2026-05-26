@@ -37,6 +37,8 @@ public:
     void Clear_Worker();
 protected:
     vector<Worker*> WorkerArray;
+    Worker* CreateWorker(int id, string name, int deptId);
+    vector<Worker*>::iterator FindWorkerById(int id);
 };
 
 class Employee : public Worker
